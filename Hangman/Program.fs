@@ -16,17 +16,14 @@ let initialGuess (word : char list) =
    word |> List.map (fun _ -> '-') |> Array.ofList |> System.String
    
 let rec attemptGuess (word : char list, current : char list, guess : char) =
-   let t = word |> Seq.toList
-   let u = current |> Seq.toList
-
    let unveiled = 
-      match t.Head with
-      | x when guess = t.Head -> t.Head.ToString()
-      | _ -> u.Head.ToString()
+      match word.Head with
+      | x when guess = word.Head -> word.Head.ToString()
+      | _ -> current.Head.ToString()
 
-   match t.Tail.Length with
+   match word.Tail.Length with
    | 0 -> unveiled
-   | _ -> unveiled + attemptGuess(t.Tail, u.Tail, guess)
+   | _ -> unveiled + attemptGuess(word.Tail, word.Tail, guess)
 
 let advanceState state =
    match state with
